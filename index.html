@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MedITest Diagnostics | Lab Billing</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">MD</div>
+      <div>
+        <h1>MedITest Diagnostics</h1>
+        <span>Lab Technician & Billing System</span>
+      </div>
+    </div>
+    <div class="contact">Call / WhatsApp: <strong>8500896721</strong></div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div>
+        <p class="eyebrow">DIAGNOSTICS MANAGEMENT</p>
+        <h2>Test Selection & Customer Billing</h2>
+        <p>Select the required tests. The system automatically finds the lowest technician-lab cost and prepares the customer bill using your customer price.</p>
+      </div>
+      <div class="hero-badge">3 Lab Suppliers</div>
+    </section>
+
+    <section class="card">
+      <div class="section-title">
+        <div>
+          <h3>1. Select Tests</h3>
+          <p>Search and select the tests requested by the customer.</p>
+        </div>
+        <div class="selected-count"><span id="selectedCount">0</span> selected</div>
+      </div>
+
+      <div class="toolbar">
+        <input id="searchInput" type="search" placeholder="Search test name..." autocomplete="off">
+        <button id="selectAllBtn" class="btn secondary">Select All</button>
+        <button id="clearAllBtn" class="btn ghost">Clear</button>
+      </div>
+
+      <div class="table-wrap">
+        <table class="test-table">
+          <thead>
+            <tr>
+              <th>Select</th>
+              <th>Test Name</th>
+              <th>MedMax Cost</th>
+              <th>MedPlus Cost</th>
+              <th>Vijaya Cost</th>
+              <th>Lowest Lab</th>
+              <th>Customer Price</th>
+            </tr>
+          </thead>
+          <tbody id="testTableBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="section-title">
+        <div>
+          <h3>2. Supplier Comparison</h3>
+          <p>Lowest technician-lab price is selected automatically for each test.</p>
+        </div>
+      </div>
+      <div id="comparisonEmpty" class="empty-state">Select one or more tests to see the cheapest lab supplier.</div>
+      <div class="table-wrap" id="comparisonWrap" hidden>
+        <table class="test-table">
+          <thead>
+            <tr>
+              <th>Test</th>
+              <th>Selected Lab</th>
+              <th>Lab Cost</th>
+              <th>Customer Price</th>
+              <th>Margin</th>
+            </tr>
+          </thead>
+          <tbody id="comparisonBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card bill-card">
+      <div class="section-title">
+        <div>
+          <h3>3. Customer Bill</h3>
+          <p>Generated from the selected tests at customer pricing.</p>
+        </div>
+        <div class="bill-actions">
+          <button id="downloadBtn" class="btn secondary" disabled>Download Bill</button>
+          <button id="printBtn" class="btn primary" disabled>Print Bill</button>
+        </div>
+      </div>
+
+      <div id="billArea" class="bill">
+        <div class="bill-header">
+          <div>
+            <h2>MedITest Diagnostics</h2>
+            <p>Accurate • Fast • Reliable Laboratory Testing</p>
+            <p>Call / WhatsApp: 8500896721</p>
+          </div>
+          <div class="invoice-meta">
+            <div><span>Invoice No.</span><strong id="invoiceNo">-</strong></div>
+            <div><span>Date</span><strong id="invoiceDate">-</strong></div>
+          </div>
+        </div>
+
+        <div class="customer-info">
+          <label>Customer Name <input id="customerName" placeholder="Enter customer name"></label>
+          <label>Mobile <input id="customerMobile" placeholder="Enter mobile number"></label>
+        </div>
+
+        <div class="table-wrap">
+          <table class="invoice-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Test Name</th>
+                <th>Rate</th>
+                <th>Discount</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody id="billBody">
+              <tr><td colspan="5" class="bill-empty">Select tests above to generate the bill.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="bill-summary">
+          <div class="summary-row grand"><span>Total Amount</span><strong id="grandTotal">₹0.00</strong></div>
+        </div>
+
+        <div class="bill-footer">
+          <p>Thank you for choosing MedITest Diagnostics.</p>
+          <small>This bill is generated for diagnostic testing services. Supplier/lab selection is internal information and is not displayed on the customer bill.</small>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    MedITest Diagnostics &copy; 2024. All rights reserved.
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
