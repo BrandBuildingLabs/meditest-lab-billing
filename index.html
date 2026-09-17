@@ -3,16 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MedITest Diagnostics | Lab Billing</title>
+  <title>MEDITEST Diagnostics | Lab Billing</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <header class="topbar">
     <div class="brand">
-      <div class="logo">MD</div>
+      <img src="photos/unnamed.jpg" alt="MedITest Logo" class="logo-img">
       <div>
-        <h1>MedITest Diagnostics</h1>
-        <span>Lab Technician & Billing System</span>
+        <h1>MEDITEST Diagnostics</h1>
+        <span>Lab Technician &amp; Billing System</span>
       </div>
     </div>
     <div class="contact">Call / WhatsApp: <strong>8500896721</strong></div>
@@ -22,25 +22,40 @@
     <section class="hero">
       <div>
         <p class="eyebrow">DIAGNOSTICS MANAGEMENT</p>
-        <h2>Test Selection & Customer Billing</h2>
-        <p>Select the required tests. The system automatically finds the lowest technician-lab cost and prepares the customer bill using your customer price.</p>
+        <h2>Test Selection &amp; Customer Billing</h2>
+        <p>Select the required tests, enter patient details, and generate the bill instantly.</p>
       </div>
-      <div class="hero-badge">3 Lab Suppliers</div>
+      <div class="hero-badge" id="selectedCount">0 selected</div>
     </section>
 
+    <!-- Step 1: Test Selection -->
     <section class="card">
       <div class="section-title">
         <div>
           <h3>1. Select Tests</h3>
-          <p>Search and select the tests requested by the customer.</p>
+          <p>Search and select the tests for this patient.</p>
         </div>
-        <div class="selected-count"><span id="selectedCount">0</span> selected</div>
+        <div class="totals-bar">
+          <div class="totals-item">
+            <span>Total MRP</span>
+            <strong id="totalMrp">₹0.00</strong>
+          </div>
+          <button id="addToBillBtn" class="btn primary" disabled>Add to Bill →</button>
+        </div>
       </div>
 
       <div class="toolbar">
         <input id="searchInput" type="search" placeholder="Search test name..." autocomplete="off">
-        <button id="selectAllBtn" class="btn secondary">Select All</button>
-        <button id="clearAllBtn" class="btn ghost">Clear</button>
+        <button id="clearAllBtn" class="btn ghost">Clear All</button>
+        <button id="marginToggleBtn" class="btn secondary">Your Margin</button>
+      </div>
+
+      <!-- Margin panel (hidden by default, only for technician) -->
+      <div id="marginPanel" class="margin-panel" hidden>
+        <div class="margin-panel-inner">
+          <span class="margin-label">Your Margin on selected tests:</span>
+          <strong id="totalMargin" class="margin-value">₹0.00</strong>
+        </div>
       </div>
 
       <div class="table-wrap">
@@ -49,60 +64,40 @@
             <tr>
               <th>Select</th>
               <th>Test Name</th>
-              <th>MedMax Cost</th>
-              <th>MedPlus Cost</th>
-              <th>Vijaya Cost</th>
-              <th>Lowest Lab</th>
-              <th>Customer Price</th>
+              <th class="right">MRP (₹)</th>
             </tr>
           </thead>
           <tbody id="testTableBody"></tbody>
         </table>
       </div>
-    </section>
 
-    <section class="card">
-      <div class="section-title">
-        <div>
-          <h3>2. Supplier Comparison</h3>
-          <p>Lowest technician-lab price is selected automatically for each test.</p>
-        </div>
-      </div>
-      <div id="comparisonEmpty" class="empty-state">Select one or more tests to see the cheapest lab supplier.</div>
-      <div class="table-wrap" id="comparisonWrap" hidden>
-        <table class="test-table">
-          <thead>
-            <tr>
-              <th>Test</th>
-              <th>Selected Lab</th>
-              <th>Lab Cost</th>
-              <th>Customer Price</th>
-              <th>Margin</th>
-            </tr>
-          </thead>
-          <tbody id="comparisonBody"></tbody>
-        </table>
+      <div class="load-more-bar" id="loadMoreBar" hidden>
+        <button id="loadMoreBtn" class="btn ghost">Load More ↓</button>
+        <span id="showingCount" class="showing-count"></span>
       </div>
     </section>
 
+    <!-- Step 2: Bill -->
     <section class="card bill-card">
       <div class="section-title">
         <div>
-          <h3>3. Customer Bill</h3>
-          <p>Generated from the selected tests at customer pricing.</p>
+          <h3>2. Customer Bill</h3>
+          <p>Fill patient details, apply discount, and print.</p>
         </div>
         <div class="bill-actions">
-          <button id="downloadBtn" class="btn secondary" disabled>Download Bill</button>
           <button id="printBtn" class="btn primary" disabled>Print Bill</button>
         </div>
       </div>
 
       <div id="billArea" class="bill">
         <div class="bill-header">
-          <div>
-            <h2>MedITest Diagnostics</h2>
-            <p>Accurate • Fast • Reliable Laboratory Testing</p>
-            <p>Call / WhatsApp: 8500896721</p>
+          <div class="bill-brand">
+            <img src="photos/unnamed.jpg" alt="MedITest Logo" class="bill-logo">
+            <div>
+              <h2>MEDITEST Diagnostics</h2>
+              <p>Accurate • Fast • Reliable Laboratory Testing</p>
+              <p>Call / WhatsApp: 8500896721</p>
+            </div>
           </div>
           <div class="invoice-meta">
             <div><span>Invoice No.</span><strong id="invoiceNo">-</strong></div>
@@ -110,9 +105,28 @@
           </div>
         </div>
 
+        <!-- Patient info -->
         <div class="customer-info">
-          <label>Customer Name <input id="customerName" placeholder="Enter customer name"></label>
-          <label>Mobile <input id="customerMobile" placeholder="Enter mobile number"></label>
+          <label>Patient Name
+            <input id="customerName" placeholder="Enter patient name">
+          </label>
+          <label>Mobile
+            <input id="customerMobile" placeholder="Enter mobile number" type="tel">
+          </label>
+          <label>Age
+            <input id="patientAge" placeholder="e.g. 32" type="number" min="0">
+          </label>
+          <label>Gender
+            <select id="patientGender">
+              <option value="">Select gender</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Other">Other</option>
+            </select>
+          </label>
+          <label>Referred by Doctor
+            <input id="refDoctor" placeholder="Doctor name">
+          </label>
         </div>
 
         <div class="table-wrap">
@@ -121,31 +135,48 @@
               <tr>
                 <th>#</th>
                 <th>Test Name</th>
-                <th>Rate</th>
-                <th>Discount</th>
-                <th>Total</th>
+                <th class="right">MRP (₹)</th>
+                <th class="right">Final Price (₹)</th>
               </tr>
             </thead>
             <tbody id="billBody">
-              <tr><td colspan="5" class="bill-empty">Select tests above to generate the bill.</td></tr>
+              <tr><td colspan="4" class="bill-empty">Select tests above and click "Add to Bill".</td></tr>
             </tbody>
           </table>
         </div>
 
         <div class="bill-summary">
-          <div class="summary-row grand"><span>Total Amount</span><strong id="grandTotal">₹0.00</strong></div>
+          <div class="summary-rows">
+            <div class="summary-row">
+              <span>Total MRP</span>
+              <span id="billTotalMrp">₹0.00</span>
+            </div>
+            <div class="summary-row discount-row">
+              <label for="globalDiscount">Discount (₹)</label>
+              <input id="globalDiscount" type="number" min="0" value="0" placeholder="0" class="discount-input">
+            </div>
+            <div class="summary-row grand">
+              <span>Amount Payable</span>
+              <strong id="grandTotal">₹0.00</strong>
+            </div>
+            <!-- Technician-only margin row, hidden by default -->
+            <div class="summary-row margin-summary-row" id="marginSummaryRow" hidden>
+              <span>Your Margin (after discount)</span>
+              <strong id="techMarginFinal" class="margin-value">₹0.00</strong>
+            </div>
+          </div>
         </div>
 
         <div class="bill-footer">
-          <p>Thank you for choosing MedITest Diagnostics.</p>
-          <small>This bill is generated for diagnostic testing services. Supplier/lab selection is internal information and is not displayed on the customer bill.</small>
+          <p>Thank you for choosing MEDITEST Diagnostics.</p>
+          <small>This bill is generated for diagnostic testing services.</small>
         </div>
       </div>
     </section>
   </main>
 
   <footer>
-    MedITest Diagnostics &copy; 2024. All rights reserved.
+    MEDITEST Diagnostics &copy; 2024. All rights reserved.
   </footer>
 
   <script src="app.js"></script>
