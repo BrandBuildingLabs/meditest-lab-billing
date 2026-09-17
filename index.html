@@ -152,8 +152,16 @@
               <span id="billTotalMrp">₹0.00</span>
             </div>
             <div class="summary-row discount-row">
-              <label for="globalDiscount">Discount (₹)</label>
-              <input id="globalDiscount" type="number" min="0" value="0" placeholder="0" class="discount-input">
+              <div class="discount-label-group">
+                <label for="globalDiscount">Discount</label>
+                <span class="pct-hint">%</span>
+              </div>
+              <input id="globalDiscount" type="number" min="0" max="100" value="0"
+                     placeholder="0" class="discount-input">
+            </div>
+            <div class="summary-row discount-amount-row">
+              <span>Discount Amount</span>
+              <span id="billDiscountAmt" class="discount-amt-val">₹0.00</span>
             </div>
             <div class="summary-row grand">
               <span>Amount Payable</span>
@@ -170,6 +178,7 @@
         <div class="bill-footer">
           <p>Thank you for choosing MEDITEST Diagnostics.</p>
           <small>This bill is generated for diagnostic testing services.</small>
+          <small>MEDITEST Diagnostics © 2024. All rights reserved</small>
         </div>
       </div>
     </section>

@@ -429,12 +429,19 @@ function updateSelectionSummary() {
   addToBillBtn.disabled       = chosen.length === 0;
 }
 
+function getDiscountPct() {
+  // Returns a value between 0 and 100
+  const raw = Number(globalDiscountEl.value) || 0;
+  return Math.min(100, Math.max(0, raw));
+}
+
 // ─── Step 2: Bill ─────────────────────────────────────────────────────────────
 function renderBill() {
   if (!billItems.length) {
     billBody.innerHTML = `<tr><td colspan="4" class="bill-empty">Select tests above and click "Add to Bill".</td></tr>`;
-    billTotalMrpEl.textContent  = money(0);
-    grandTotalEl.textContent    = money(0);
+    billTotalMrpEl.textContent    = money(0);
+    document.getElementById("billDiscountAmt").textContent = money(0);
+    grandTotalEl.textContent      = money(0);
     techMarginFinalEl.textContent = money(0);
     printBtn.disabled = true;
     return;
@@ -456,24 +463,25 @@ function renderBill() {
 function updateBillTotals() {
   if (!billItems.length) return;
 
-  const sumMrp     = billItems.reduce((s, it) => s + it.test.mrp, 0);
-  const sumB2b     = billItems.reduce((s, it) => s + it.test.b2b, 0);
-  const disc       = Math.min(getGlobalDiscount(), sumMrp);   // can't exceed total MRP
-  const finalAmt   = sumMrp - disc;
+  const sumMrp    = billItems.reduce((s, it) => s + it.test.mrp, 0);
+  const sumB2b    = billItems.reduce((s, it) => s + it.test.b2b, 0);
+  const pct       = getDiscountPct();                    // e.g. 10 means 10%
+  const discAmt   = sumMrp * (pct / 100);               // ₹ amount discounted
+  const finalAmt  = sumMrp - discAmt;                   // amount payable
 
-  // Distribute discount proportionally across rows to show final price per test
+  // Update each row's final price (each row discounted by same %)
   billItems.forEach((item, i) => {
-    const proportion = sumMrp > 0 ? item.test.mrp / sumMrp : 0;
-    const rowDisc    = disc * proportion;
-    const rowFinal   = Math.max(0, item.test.mrp - rowDisc);
+    const rowFinal = item.test.mrp * (1 - pct / 100);
     const cell = document.getElementById(`finalPrice_${i}`);
-    if (cell) cell.textContent = `₹${rowFinal.toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+    if (cell) cell.textContent =
+      `₹${rowFinal.toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
   });
 
-  // Technician margin after discount = (MRP - B2B) - discount given
-  const techMarginAmt = Math.max(0, sumMrp - sumB2b - disc);
+  // Technician margin after discount = gross margin − discount given
+  const techMarginAmt = Math.max(0, sumMrp - sumB2b - discAmt);
 
   billTotalMrpEl.textContent    = money(sumMrp);
+  document.getElementById("billDiscountAmt").textContent = `− ${money(discAmt)}`;
   grandTotalEl.textContent      = money(finalAmt);
   techMarginFinalEl.textContent = money(techMarginAmt);
 }

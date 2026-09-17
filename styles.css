@@ -179,14 +179,24 @@ tr.row-selected { background: #f0faf1 !important; }
 .summary-row.grand { border-top: 2px solid #202421; border-bottom: none; font-size: 19px; margin-top: 4px; padding-top: 12px; }
 .summary-row.margin-summary-row { color: var(--green); }
 
-/* Global discount input in summary */
+/* Global discount input in summary (percentage) */
 .discount-row label { font-weight: 600; color: var(--muted); }
+.discount-label-group {
+  display: flex; align-items: center; gap: 6px;
+}
+.pct-hint {
+  font-size: 15px; font-weight: 700; color: var(--green);
+  background: var(--green-light); border-radius: 5px;
+  padding: 1px 6px; line-height: 1.4;
+}
 .discount-input {
-  width: 110px; padding: 7px 10px; font-size: 14px;
-  border: 1px solid var(--border); border-radius: 7px;
-  text-align: right; font: inherit;
+  width: 90px; padding: 7px 10px; font-size: 15px; font-weight: 700;
+  border: 2px solid var(--green); border-radius: 7px;
+  text-align: right; font: inherit; color: var(--dark);
 }
 .discount-input:focus { border-color: var(--blue); box-shadow: 0 0 0 2px rgba(23,78,166,.1); }
+.discount-amount-row { color: var(--danger); font-size: 13px; }
+.discount-amt-val { font-weight: 700; color: var(--danger); }
 
 /* ── Margin panel (technician only) ── */
 .margin-panel {
@@ -227,12 +237,24 @@ footer { text-align: center; padding: 20px; color: #77827b; font-size: 12px; }
 @media print {
   body { background: white; }
   .topbar, .hero, .card:not(.bill-card), footer,
-  .bill-card > .section-title, .customer-info input,
-  .customer-info select { display: none !important; }
+  .bill-card > .section-title { display: none !important; }
   .container { width: 100%; margin: 0; }
   .bill-card { border: 0; box-shadow: none; padding: 0; }
   .bill { border: 0; max-width: none; padding: 0; }
   .customer-info label { font-size: 12px; }
+  .customer-info {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+  .customer-info input,
+  .customer-info select {
+    border: none;
+    background: transparent;
+    padding: 0;
+    color: inherit;
+    appearance: none;
+  }
   .discount-input { border: none; background: transparent; }
   .margin-panel, .margin-summary-row { display: none !important; }
 }
