@@ -48,6 +48,7 @@
         <input id="searchInput" type="search" placeholder="Search test name..." autocomplete="off">
         <button id="clearAllBtn" class="btn ghost">Clear All</button>
         <button id="marginToggleBtn" class="btn secondary">Your Margin</button>
+        <button id="editPricesBtn" class="btn edit-prices-btn">✏️ Edit Prices</button>
       </div>
 
       <!-- Margin panel (hidden by default, only for technician) -->
@@ -187,6 +188,46 @@
   <footer>
     MEDITEST Diagnostics &copy; 2024. All rights reserved.
   </footer>
+
+  <!-- Edit Prices Modal -->
+  <div id="editModal" class="modal-overlay" hidden>
+    <div class="modal-box">
+      <div class="modal-header">
+        <div>
+          <h3>✏️ Edit Test Prices</h3>
+          <p>Search and update MRP &amp; B2B values. Click <strong>Save &amp; Download app.js</strong> to make changes permanent.</p>
+        </div>
+        <button id="closeEditModal" class="modal-close" title="Close">✕</button>
+      </div>
+
+      <div class="modal-toolbar">
+        <input id="editSearchInput" type="search" placeholder="Search test name…" autocomplete="off">
+        <span id="editMatchCount" class="edit-match-count"></span>
+      </div>
+
+      <div class="edit-table-wrap">
+        <table class="edit-table">
+          <thead>
+            <tr>
+              <th>Test Name</th>
+              <th class="right">MRP (₹)</th>
+              <th class="right">B2B (₹)</th>
+              <th class="right">Margin (₹)</th>
+            </tr>
+          </thead>
+          <tbody id="editTableBody"></tbody>
+        </table>
+      </div>
+
+      <div class="modal-footer">
+        <button id="resetAllBtn" class="btn danger">↩ Reset All to Default</button>
+        <div class="modal-footer-right">
+          <button id="closeEditModalFooter" class="btn ghost">Cancel</button>
+          <button id="saveDownloadBtn" class="btn primary">💾 Save &amp; Download app.js</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <script src="app.js"></script>
 </body>

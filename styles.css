@@ -222,6 +222,110 @@ tr.row-selected { background: #f0faf1 !important; }
 
 footer { text-align: center; padding: 20px; color: #77827b; font-size: 12px; }
 
+/* ── Edit Prices Button ── */
+.btn.edit-prices-btn {
+  background: #fff4e0; color: #a05000; border: 1px solid #f0c87a;
+}
+.btn.edit-prices-btn:hover { background: #fde9b0; }
+
+/* ── Danger button ── */
+.btn.danger { background: #fdecea; color: var(--danger); border: 1px solid #f5c6c2; }
+.btn.danger:hover { background: #fbd5d1; }
+
+/* ── Modal Overlay ── */
+.modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(17, 24, 20, 0.55);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 9999;
+  padding: 20px;
+}
+.modal-overlay[hidden] { display: none; }
+
+.modal-box {
+  background: var(--white);
+  border-radius: 18px;
+  width: min(860px, 100%);
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 20px 60px rgba(17, 24, 20, 0.22);
+  overflow: hidden;
+}
+
+/* ── Modal Header ── */
+.modal-header {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  gap: 16px; padding: 22px 24px 16px;
+  border-bottom: 1px solid var(--border);
+}
+.modal-header h3 { margin: 0 0 4px; font-size: 19px; }
+.modal-header p  { margin: 0; font-size: 13px; color: var(--muted); }
+
+.modal-close {
+  flex-shrink: 0;
+  background: #f0f2f1; border: none;
+  border-radius: 50%; width: 34px; height: 34px;
+  font-size: 16px; cursor: pointer; line-height: 1;
+  color: #354039;
+}
+.modal-close:hover { background: #dfe6e1; }
+
+/* ── Modal Toolbar (search) ── */
+.modal-toolbar {
+  display: flex; align-items: center; gap: 10px;
+  padding: 14px 24px;
+  border-bottom: 1px solid var(--border);
+}
+#editSearchInput { flex: 1; }
+.edit-match-count { font-size: 12px; color: var(--muted); white-space: nowrap; }
+
+/* ── Edit Table ── */
+.edit-table-wrap {
+  flex: 1; overflow-y: auto; padding: 0 24px;
+}
+.edit-table { width: 100%; border-collapse: collapse; }
+.edit-table th {
+  background: #f7faf8; color: #49554d;
+  font-size: 11px; text-transform: uppercase; letter-spacing: .4px;
+  padding: 11px 10px;
+  border-bottom: 1px solid var(--border);
+  position: sticky; top: 0; z-index: 1;
+}
+.edit-table td { padding: 8px 10px; border-bottom: 1px solid #f0f4f1; vertical-align: middle; }
+.edit-table tbody tr:hover { background: #f9fbf9; }
+.edit-table tbody tr.row-modified { background: #f0faf1; }
+.edit-table .test-name-cell { font-size: 13px; font-weight: 600; max-width: 340px; }
+.edit-table .test-name-cell small {
+  display: inline-block; margin-left: 6px;
+  background: var(--green); color: white;
+  font-size: 9px; font-weight: 700; letter-spacing: .4px;
+  padding: 2px 6px; border-radius: 999px; text-transform: uppercase;
+  vertical-align: middle;
+}
+
+.price-input {
+  width: 100px; padding: 7px 10px;
+  font: inherit; font-size: 13px; font-weight: 700;
+  border: 1.5px solid var(--border); border-radius: 7px;
+  text-align: right; background: white; color: var(--dark);
+  outline: none;
+}
+.price-input:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(23,78,166,.08); }
+.price-input.changed { border-color: var(--green); background: #f4fdf5; }
+
+.margin-cell { font-size: 13px; font-weight: 700; color: var(--green); white-space: nowrap; }
+.margin-cell.negative { color: var(--danger); }
+
+/* ── Modal Footer ── */
+.modal-footer {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; padding: 16px 24px;
+  border-top: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+.modal-footer-right { display: flex; gap: 10px; }
+
 @media (max-width: 760px) {
   .topbar, .hero, .section-title, .bill-header { align-items: flex-start; flex-direction: column; }
   .contact { align-self: flex-start; }
