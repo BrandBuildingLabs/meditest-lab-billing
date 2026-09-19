@@ -38,6 +38,7 @@ body {
 .brand h1 { margin: 0; font-size: 20px; }
 .brand span { color: #c8d1cb; font-size: 12px; }
 .contact { font-size: 14px; }
+.topbar-hc { font-size: 11.5px; color: #9fe3a5; font-weight: 700; letter-spacing: 0.3px; text-align: right; margin-top: 3px; }
 
 .container { width: min(1180px, 92%); margin: 28px auto 50px; }
 
@@ -145,12 +146,50 @@ tr.row-selected { background: #f0faf1 !important; }
   padding-bottom: 18px; border-bottom: 2px solid var(--green);
 }
 .bill-brand { display: flex; align-items: center; gap: 14px; }
+.bill-brand { display: flex; align-items: flex-start; gap: 16px; }
 .bill-logo {
   width: 64px; height: 64px; border-radius: 10px;
   object-fit: contain; border: 1px solid var(--border);
+  width: 70px; height: 70px; border-radius: 10px;
+  object-fit: contain; border: 1px solid var(--border); flex-shrink: 0;
+  margin-top: 2px;
 }
 .bill-header h2 { margin: 0 0 7px; color: var(--green); }
 .bill-header p { margin: 3px 0; color: var(--muted); font-size: 13px; }
+.bill-brand-details h2 { margin: 0 0 3px; color: var(--green); font-size: 22px; }
+.bill-collab {
+  margin: 0 0 5px;
+  color: var(--blue);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.35;
+}
+.bill-address {
+  margin: 0 0 5px;
+  color: #49554d;
+  font-size: 12.5px;
+  line-height: 1.4;
+}
+.bill-contact-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 12.5px;
+  color: #354039;
+  flex-wrap: wrap;
+}
+.home-collection-badge {
+  display: inline-flex;
+  align-items: center;
+  background: var(--green-light);
+  color: var(--green);
+  border: 1px solid #bce1c0;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
 .invoice-meta { text-align: right; min-width: 150px; }
 .invoice-meta div { margin-bottom: 8px; }
 .invoice-meta span { display: block; color: var(--muted); font-size: 11px; }
@@ -197,6 +236,7 @@ tr.row-selected { background: #f0faf1 !important; }
 .discount-input:focus { border-color: var(--blue); box-shadow: 0 0 0 2px rgba(23,78,166,.1); }
 .discount-amount-row { color: var(--danger); font-size: 13px; }
 .discount-amt-val { font-weight: 700; color: var(--danger); }
+.print-discount-val { display: none; }
 
 /* ── Margin panel (technician only) ── */
 .margin-panel {
@@ -219,6 +259,9 @@ tr.row-selected { background: #f0faf1 !important; }
   text-align: center; color: var(--muted);
 }
 .bill-footer p { margin: 0 0 5px; font-weight: 700; color: #36413a; }
+.bill-footer .bill-thankyou { margin: 0 0 5px; font-weight: 700; color: #36413a; font-size: 14px; }
+.bill-footer-highlight { margin: 0 0 4px; font-size: 12.5px; color: var(--blue); font-weight: 600; }
+.bill-footer small { display: block; font-size: 11px; color: var(--muted); margin-top: 2px; }
 
 footer { text-align: center; padding: 20px; color: #77827b; font-size: 12px; }
 
@@ -349,6 +392,7 @@ footer { text-align: center; padding: 20px; color: #77827b; font-size: 12px; }
   .customer-info {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: 2fr 1.5fr 1fr 1fr 2fr;
     gap: 12px;
   }
   .customer-info input,
@@ -360,5 +404,40 @@ footer { text-align: center; padding: 20px; color: #77827b; font-size: 12px; }
     appearance: none;
   }
   .discount-input { border: none; background: transparent; }
+
+  /* Remove discount component if discount is 0 */
+  .zero-discount .discount-row,
+  .zero-discount .discount-amount-row {
+    display: none !important;
+  }
+
+  /* When discount is > 0, hide inputs and show clean text in print */
+  .discount-input,
+  .discount-label-group .pct-hint {
+    display: none !important;
+  }
+  .print-discount-val {
+    display: inline-block !important;
+    font-weight: 700;
+    color: inherit;
+    font-size: 14px;
+  }
+
+  .bill-collab {
+    color: #174ea6 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .home-collection-badge {
+    background: #eaf6eb !important;
+    color: #2f7d32 !important;
+    border: 1px solid #2f7d32 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .bill-footer-highlight {
+    color: #174ea6 !important;
+    font-weight: 600;
+  }
   .margin-panel, .margin-summary-row { display: none !important; }
 }

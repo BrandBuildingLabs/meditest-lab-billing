@@ -12,10 +12,13 @@
       <img src="photos/unnamed.jpg" alt="MedITest Logo" class="logo-img">
       <div>
         <h1>MEDITEST Diagnostics</h1>
-        <span>Lab Technician &amp; Billing System</span>
+        <span>All Blood &amp; Urine Investigations through Apollo Diagnostics</span>
       </div>
     </div>
-    <div class="contact">Call / WhatsApp: <strong>8500896721</strong></div>
+    <div class="contact">
+      <div>Call / WhatsApp: <strong>8500896721</strong></div>
+      <div class="topbar-hc">Home Collection Available</div>
+    </div>
   </header>
 
   <main class="container">
@@ -90,14 +93,18 @@
         </div>
       </div>
 
-      <div id="billArea" class="bill">
+      <div id="billArea" class="bill zero-discount">
         <div class="bill-header">
           <div class="bill-brand">
             <img src="photos/unnamed.jpg" alt="MedITest Logo" class="bill-logo">
-            <div>
+            <div class="bill-brand-details">
               <h2>MEDITEST Diagnostics</h2>
-              <p>Accurate • Fast • Reliable Laboratory Testing</p>
-              <p>Call / WhatsApp: 8500896721</p>
+              <p class="bill-collab">All Blood and Urine Investigations through Apollo Diagnostics</p>
+              <p class="bill-address"><strong>Address:</strong> Gazi E Millat Colony, Beside Mustafa Medical &amp; General Store, Hyderabad.</p>
+              <div class="bill-contact-info">
+                <span><strong>Contact:</strong> 8500896721</span>
+                <span class="home-collection-badge">Home Collection Available</span>
+              </div>
             </div>
           </div>
           <div class="invoice-meta">
@@ -159,6 +166,7 @@
               </div>
               <input id="globalDiscount" type="number" min="0" max="100" value="0"
                      placeholder="0" class="discount-input">
+              <span id="printDiscountVal" class="print-discount-val">0%</span>
             </div>
             <div class="summary-row discount-amount-row">
               <span>Discount Amount</span>
@@ -177,9 +185,10 @@
         </div>
 
         <div class="bill-footer">
-          <p>Thank you for choosing MEDITEST Diagnostics.</p>
-          <small>This bill is generated for diagnostic testing services.</small>
-          <small>MEDITEST Diagnostics © 2024. All rights reserved</small>
+          <p class="bill-thankyou">Thank you for choosing MEDITEST Diagnostics.</p>
+          <p class="bill-footer-highlight">All Blood and Urine Investigations through Apollo Diagnostics &bull; Home Collection Available: <strong>8500896721</strong></p>
+          <small class="bill-footer-address">Address: Gazi E Millat Colony, Beside Mustafa Medical &amp; General Store, Hyderabad.</small>
+          <small class="bill-footer-copy">MEDITEST Diagnostics &copy; 2024. All rights reserved.</small>
         </div>
       </div>
     </section>
